@@ -18,6 +18,7 @@ class ValidationSettings(BaseModel):
 
 
 class PathSettings(BaseModel):
+    input: str = "test_data/individual_tax_returns.csv"
     logging_config: str = "configs/logging.yaml"
 
 
