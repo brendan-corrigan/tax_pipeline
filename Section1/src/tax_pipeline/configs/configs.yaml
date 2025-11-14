@@ -1,0 +1,6 @@
+env: local
+assessment_year: 2023
+
+validation:
+  nric_regex: "^[STFG]\\d{7}[A-Z]$"
+  postal_code_regex: "^\\d{6}$"
