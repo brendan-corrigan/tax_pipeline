@@ -1,6 +1,6 @@
 from datetime import date
 from enum import StrEnum
-from typing import Literal, Optional
+from typing import Optional
 
 from pydantic import BaseModel, Field
 
@@ -11,12 +11,14 @@ class FilingStatus(StrEnum):
 
 
 class TaxReturn(BaseModel):
-    taxpayer_id: int = Field()  # REQUIRED
+    # still required – structural key
+    taxpayer_id: str = Field(...)
 
+    # everything else is soft / optional – no regex, no strict business rules
     nric: Optional[str] = Field(default=None)
     full_name: Optional[str] = Field(default=None)
 
-    filing_status: Optional[Literal["single", "married"]] = Field(default=None)
+    filing_status: Optional[FilingStatus] = Field(default=None)
 
     assessment_year: Optional[int] = Field(default=None)
     filing_date: Optional[date] = Field(default=None)
