@@ -17,6 +17,10 @@ class ValidationSettings(BaseModel):
     postal_code_regex: str = r"^\d{6}$"
 
 
+class PathSettings(BaseModel):
+    logging_config: str = "configs/logging.yaml"
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_nested_delimiter="__",
@@ -27,6 +31,8 @@ class Settings(BaseSettings):
     assessment_year: int = 2023
 
     validation: ValidationSettings = Field(default_factory=ValidationSettings)
+
+    paths: PathSettings = Field(default_factory=PathSettings)
 
     @classmethod
     def load(cls, yaml_path: str | Path = "configs/config.yaml") -> "Settings":
