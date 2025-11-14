@@ -1,0 +1,80 @@
+dimensions:
+  - Completeness
+  - Uniqueness
+  - Validity
+  - Conformity
+  - Consistency
+  - Timeliness
+
+rules:
+  - id: application_id_not_null
+    dimension: Completeness
+    level: row
+
+  - id: citizen_nric_not_null
+    dimension: Completeness
+    level: row
+
+  - id: grant_scheme_name_not_null
+    dimension: Completeness
+    level: row
+
+  - id: household_income_not_null
+    dimension: Completeness
+    level: row
+
+  - id: application_id_unique
+    dimension: Uniqueness
+    level: dataset
+
+  - id: citizen_nric_format
+    dimension: Validity
+    level: row
+
+  - id: household_income_non_negative
+    dimension: Validity
+    level: row
+
+  - id: household_size_positive
+    dimension: Validity
+    level: row
+
+  - id: requested_amount_non_negative
+    dimension: Validity
+    level: row
+
+  - id: approved_amount_non_negative_or_null
+    dimension: Validity
+    level: row
+
+  - id: application_date_not_in_future
+    dimension: Validity
+    level: row
+
+  - id: application_status_allowed_values
+    dimension: Conformity
+    level: row
+
+  - id: application_date_format_ddmmyyyy
+    dimension: Conformity
+    level: row
+
+  - id: decision_date_format_yyyymmdd
+    dimension: Conformity
+    level: row
+
+  - id: decision_date_not_before_application_date
+    dimension: Consistency
+    level: row
+
+  - id: approved_amount_null_status_mapping
+    dimension: Consistency
+    level: row
+
+  - id: decision_date_within_6_months
+    dimension: Timeliness
+    level: row
+
+  - id: decision_date_not_in_future
+    dimension: Timeliness
+    level: row

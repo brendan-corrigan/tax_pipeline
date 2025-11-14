@@ -1,0 +1,7 @@
+dimension_name,score,passed_rows,failed_rows,total_rows
+Completeness,80.41,8041,1959,10000
+Conformity,16.96,1696,8304,10000
+Consistency,11.07,1107,8893,10000
+Timeliness,16.96,1696,8304,10000
+Uniqueness,100.0,10000,0,10000
+Validity,8.94,894,9106,10000
