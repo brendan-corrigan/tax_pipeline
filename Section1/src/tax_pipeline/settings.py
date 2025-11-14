@@ -14,12 +14,26 @@ class Environment(StrEnum):
 
 class ValidationSettings(BaseModel):
     nric_regex: str = r"^[STFG]\d{7}[A-Z]$"
-    postal_code_regex: str = r"^\d{6}$"
+    postal_code_regex: str = r"^[0-9]{6}$"
+    filing_date_after_ay: bool = True
+    cpf_only_for_residents: bool = True
+    allow_negative_chargeable_income: bool = False
+
+
+class DQWeights(BaseModel):
+    nric_valid: float = 0.2
+    postal_valid: float = 0.1
+    filing_date_valid: float = 0.2
+    chargeable_calc_valid: float = 0.3
+    cpf_residency_valid: float = 0.2
 
 
 class PathSettings(BaseModel):
     input: str = "test_data/individual_tax_returns.csv"
     logging_config: str = "configs/logging.yaml"
+    landing_dir: str = "artifacts/landing"
+    curated_dir: str = "artifacts/curated"
+    dq_dir: str = "artifacts"
 
 
 class Settings(BaseSettings):
@@ -34,6 +48,8 @@ class Settings(BaseSettings):
     validation: ValidationSettings = Field(default_factory=ValidationSettings)
 
     paths: PathSettings = Field(default_factory=PathSettings)
+
+    dq_weights: DQWeights = Field(default_factory=DQWeights)
 
     @classmethod
     def load(cls, yaml_path: str | Path = "configs/config.yaml") -> "Settings":
