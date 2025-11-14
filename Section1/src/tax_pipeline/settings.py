@@ -30,8 +30,8 @@ class DQWeights(BaseModel):
 
 class PathSettings(BaseModel):
     input: str = "test_data/individual_tax_returns.csv"
+    output: str = "artifacts"
     logging_config: str = "configs/logging.yaml"
-    landing_dir: str = "artifacts/landing"
     curated_dir: str = "artifacts/curated"
     dq_dir: str = "artifacts"
 

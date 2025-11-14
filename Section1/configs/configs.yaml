@@ -10,8 +10,9 @@ validation:
 
 paths:
   input: "test_data/individual_tax_returns.csv"
+  output: "artifacts"
   logging_config: "configs/logging.yaml"
-  landing_dir: "artifacts/landing"
+
   curated_dir: "artifacts/curated"
   dq_dir: "artifacts"
 

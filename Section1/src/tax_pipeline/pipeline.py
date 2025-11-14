@@ -45,12 +45,18 @@ class Pipeline:
 
         df_with_dq = self._apply_dq(df)
         self._write_dq_artifacts(df_with_dq)
+        logger.info(
+            f"Data Quality report written to {self.settings.paths.dq_dir}"
+        )
 
         dims = T.build_dims_and_fact(df_with_dq)
         self._write_curated(*dims)
+        logger.info(
+            f"Dimension and Fact tables written to {self.settings.paths.curated_dir}"
+        )
+        logger.info("Pipeline run completed successfully")
 
     def _ensure_dirs(self) -> None:
-        ensure_dir(self.settings.paths.landing_dir)
         ensure_dir(self.settings.paths.curated_dir)
         ensure_dir(self.settings.paths.dq_dir)
 
