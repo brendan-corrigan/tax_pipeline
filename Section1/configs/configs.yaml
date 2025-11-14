@@ -1,0 +1,23 @@
+env: local
+assessment_year: 2023
+
+validation:
+  nric_regex: "^[STFG][0-9]{7}[A-Z]$"
+  postal_code_regex: "^[0-9]{6}$"
+  filing_date_after_ay: true
+  cpf_only_for_residents: true
+  allow_negative_chargeable_income: false
+
+paths:
+  input: "test_data/individual_tax_returns.csv"
+  logging_config: "configs/logging.yaml"
+  landing_dir: "artifacts/landing"
+  curated_dir: "artifacts/curated"
+  dq_dir: "artifacts"
+
+dq_weights:
+  nric_valid: 0.2
+  postal_valid: 0.1
+  filing_date_valid: 0.2
+  chargeable_calc_valid: 0.3
+  cpf_residency_valid: 0.2

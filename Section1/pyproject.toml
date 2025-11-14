@@ -1,0 +1,31 @@
+[project]
+name = "tax-pipeline"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+authors = [{ name = "Your Name" }]
+dependencies = [
+  "pandas>=2.3.3",
+  "pyarrow>=22.0.0",
+  "pydantic>=2.12.4",
+  "pydantic-settings>=2.3",
+  "pyyaml>=6.0.1",
+]
+
+[project.scripts]
+taxpipeline = "tax_pipeline.main:main"
+
+[dependency-groups]
+dev = [
+  "pytest>=9.0.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.9,<0.10.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+addopts = "-q"

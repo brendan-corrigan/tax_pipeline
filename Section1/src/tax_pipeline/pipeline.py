@@ -1,4 +1,6 @@
+import json
 import logging
+from pathlib import Path
 from typing import Any, Optional
 
 import pandas as pd
@@ -6,7 +8,7 @@ from pydantic import BaseModel, ValidationError
 
 from . import transforms as T
 from .data_quality import dq_score
-from .io.utils import ensure_dir
+from .io.utils import ensure_dir, write_csv, write_parquet
 from .schema import TaxReturn
 from .settings import Settings
 from .validators import (
@@ -42,6 +44,10 @@ class Pipeline:
         self._ensure_dirs()
 
         df_with_dq = self._apply_dq(df)
+        self._write_dq_artifacts(df_with_dq)
+
+        dims = T.build_dims_and_fact(df_with_dq)
+        self._write_curated(*dims)
 
     def _ensure_dirs(self) -> None:
         ensure_dir(self.settings.paths.landing_dir)
@@ -126,3 +132,56 @@ class Pipeline:
             df_out[col] = flags[col]
 
         return df_out
+
+    def _write_dq_artifacts(self, df: pd.DataFrame) -> None:
+        dq_dir = Path(self.settings.paths.dq_dir)
+        report_path = dq_dir / "dq_report.csv"
+        summary_path = dq_dir / "dq_summary.json"
+
+        dq_report_cols = [
+            col
+            for col in [
+                "taxpayer_id",
+                "nric",
+                "assessment_year",
+                "dq_score",
+                "nric_valid",
+                "postal_valid",
+                "filing_date_valid",
+                "chargeable_calc_valid",
+                "cpf_residency_valid",
+            ]
+            if col in df.columns
+        ]
+
+        write_csv(df[dq_report_cols], report_path)
+
+        summary = {
+            "records": int(len(df)),
+            "avg_dq": float(
+                df["dq_score"].mean() if "dq_score" in df.columns else 0.0
+            ),
+            "pct_valid_nric": float(df["nric_valid"].mean()),
+            "pct_valid_postal": float(df["postal_valid"].mean()),
+            "pct_valid_filing_date": float(df["filing_date_valid"].mean()),
+            "pct_valid_chargeable": float(df["chargeable_calc_valid"].mean()),
+            "pct_valid_cpf_residency": float(df["cpf_residency_valid"].mean()),
+        }
+
+        summary_path.parent.mkdir(parents=True, exist_ok=True)
+        summary_path.write_text(json.dumps(summary, indent=2))
+
+    def _write_curated(
+        self,
+        dim_taxpayer: pd.DataFrame,
+        dim_time: pd.DataFrame,
+        dim_location: pd.DataFrame,
+        dim_occupation: pd.DataFrame,
+        fact: pd.DataFrame,
+    ) -> None:
+        curated_dir = Path(self.settings.paths.curated_dir)
+        write_parquet(dim_taxpayer, curated_dir / "dim_taxpayer.parquet")
+        write_parquet(dim_time, curated_dir / "dim_time.parquet")
+        write_parquet(dim_location, curated_dir / "dim_location.parquet")
+        write_parquet(dim_occupation, curated_dir / "dim_occupation.parquet")
+        write_parquet(fact, curated_dir / "fact_tax_returns.parquet")

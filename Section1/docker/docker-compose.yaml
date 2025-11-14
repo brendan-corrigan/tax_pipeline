@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  tax-pipeline:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: sg-tax-pipeline:latest
+    volumes:
+      - ../artifacts:/app/artifacts
+      - ../individual_tax_returns.csv:/app/individual_tax_returns.csv:ro
+      - ../configs:/app/configs:ro
+    environment:
+      - ENV=local
+    command:
+      [
+        "tax-pipeline",
+        "/app/individual_tax_returns.csv",
+        "/app/artifacts",
+        "configs/config.yaml",
+      ]
