@@ -1,0 +1,18 @@
+2025-11-14 20:22:50 | INFO | tax_pipeline.pipeline | Starting pipeline run
+2025-11-14 20:22:50 | INFO | tax_pipeline.pipeline | Loaded raw data
+2025-11-14 20:40:35 | INFO | tax_pipeline.pipeline | Starting pipeline run
+2025-11-14 20:40:35 | INFO | tax_pipeline.pipeline | Loaded raw data
+2025-11-14 20:40:35 | INFO | tax_pipeline.pipeline | Standardized data frame
+2025-11-14 20:40:50 | INFO | tax_pipeline.pipeline | Starting pipeline run
+2025-11-14 20:40:50 | INFO | tax_pipeline.pipeline | Loaded raw data
+2025-11-14 20:40:50 | INFO | tax_pipeline.pipeline | Standardized data frame
+2025-11-14 21:00:51 | INFO | tax_pipeline.pipeline | Starting pipeline run
+2025-11-14 21:01:15 | INFO | tax_pipeline.pipeline | Starting pipeline run
+2025-11-14 21:01:15 | INFO | tax_pipeline.pipeline | Loaded raw data
+2025-11-14 21:01:15 | INFO | tax_pipeline.pipeline | Standardized data frame
+2025-11-14 21:03:46 | INFO | tax_pipeline.pipeline | Starting pipeline run
+2025-11-14 21:03:46 | INFO | tax_pipeline.pipeline | Loaded raw data
+2025-11-14 21:03:46 | INFO | tax_pipeline.pipeline | Standardized data frame
+2025-11-14 21:03:46 | INFO | tax_pipeline.pipeline | Data Quality report written to artifacts
+2025-11-14 21:03:46 | INFO | tax_pipeline.pipeline | Dimension and Fact tables written to artifacts/curated
+2025-11-14 21:03:46 | INFO | tax_pipeline.pipeline | Pipeline run completed successfully

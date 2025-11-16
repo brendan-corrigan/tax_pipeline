@@ -1,0 +1,9 @@
+{
+  "records": 143,
+  "avg_dq": 84.4055944055944,
+  "pct_valid_nric": 0.7622377622377622,
+  "pct_valid_postal": 1.0,
+  "pct_valid_filing_date": 0.7832167832167832,
+  "pct_valid_chargeable": 0.7832167832167832,
+  "pct_valid_cpf_residency": 1.0
+}
